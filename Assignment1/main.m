@@ -1,4 +1,5 @@
 %% A.1.2 %%
+% should be run from the same directory as the folder PattRecClasses
 
 addpath PattRecClasses
 
@@ -7,10 +8,10 @@ q = [0.75;0.25];
 A = [0.99 0.01;0.03 0.97];
 mu = [0 3];
 sigma = [1 2];
-B = [GaussD("Mean", mu(1), "Variance", sigma(1));GaussD("Mean", mu(2), "Variance", sigma(2))];
+B = [GaussD("Mean", mu(1), "Variance", sigma(1));GaussD("Mean", mu(2), "Variance", sigma(2)^2)];
 T = 10000;
 
-%% 2.
+%% 1.2.
 
 M = 25;
 mc = MarkovChain(q, A);
@@ -33,7 +34,7 @@ ylabel('State probability')
 title('Running Average State Probability')
 %mean(s)
 %sD = mc.stationaryDist
-%% 3.
+%% 1.3.
 
 mc = MarkovChain(q, A);
 M = 100;
@@ -42,14 +43,13 @@ xvec = zeros(2,M);
 xm = 0;
 xv = xm;
 for i = 1:M
-    [X,~] = h.rand(T); % seems ok, again S ~75 % of the time "1"
-    %xm(i) = mean(X); %~ ~0.75 = 3*0.25 = mu2*q2 (mu1 = 0!)
-    %xv(i) = var(X); % ~3 = sigma1+sigma2 NO
+    [X,~] = h.rand(T); 
+%     xm(i) = mean(X); %~ ~0.75 
+%     xv(i) = var(X); % ~3.475
     xm = xm + mean(X);
     xv = xv + var(X);
     xvec(:,i) =[xm xv]./i;
 end
-
 
 f3 = figure('Name', 'figures/runningAverageMeanVariance');
 plot(1:M, xvec(1,:), 1:M, xvec(2,:))
@@ -58,7 +58,7 @@ xlabel('Number of iterations')
 ylabel('Running Averages')
 title('Running Average of first and second moment')
 
-%% 4. 
+%% 1.4. 
 
 ht = HMM(mc,B);
 U = 500;
@@ -71,15 +71,14 @@ xlabel('t')
 ylabel('HMM output X(t)')
 title('HMM output with 500 samples')
 legend('HMM output', 'True state')
-% Tydliga trender i upp- och nedmod. Även om den är brusig så går det att
-% se tydliga mönster
+% Clear difference between up- and down modes
 
-%% 5.
+%% 1.5.
 
 % mc same as before, B changes
 
 mu = [0 0];
-Bnew = [GaussD("Mean", mu(1), "Variance", sigma(1));GaussD("Mean", mu(2), "Variance", sigma(2))];
+Bnew = [GaussD("Mean", mu(1), "Variance", sigma(1));GaussD("Mean", mu(2), "Variance", sigma(2)^2)];
 
 htnew = HMM(mc,Bnew);
 V = 500;
@@ -97,24 +96,31 @@ legend('HMM output', 'True state')
 % zero mean makes this very very hard to do reliably. A distinct difference
 % in mean is needed if we want to distinguish state outputs!
 
-%% 6. test for finite duration - check S =< U
+%% 1.6. test for finite duration - check S =< U
 
 Anew = [0.97 0.01 0.02;0.03 0.93 0.04]; % ->~100 samples average length
 mcfin = MarkovChain(q, Anew);
 hfin = HMM(mcfin,B);
 U = 10000;
-N = 1000;
+N = 2500;
 
-s = zeros(1,N);
 for i = 1:N
     [~,S] = hfin.rand(U);
     s(i) = length(S);
+    ms(i) = mean(s);
 end
-mean(s)
+
 t = (eye(2)-Anew(:,1:2))\[1;1];
 q'*t
 
-%% 7. test for vector valued output in HMM, i.e. B --> covariance matrix
+f6 = figure('Name', 'figures/finiteDuration');
+plot(1:N,ms)
+xlabel('Number of iterations')
+ylabel('Sequence Length')
+title('Running Average sequence length')
+
+
+%% 1.7. test for vector valued output in HMM, i.e. B --> covariance matrix
 
 L = 10000;
 

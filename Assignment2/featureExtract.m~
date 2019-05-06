@@ -1,0 +1,5 @@
+function features = featureExtract(featureMatrix)
+
+frequencies = zeros
+
+features = [frequencies, durations]

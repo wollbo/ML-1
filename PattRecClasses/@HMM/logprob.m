@@ -23,7 +23,7 @@
 %Ref:   Arne Leijon (20xx): Pattern Recognition.
 %
 %----------------------------------------------------
-%Code Authors:
+%Code Author: Hilding Wollbo 2019
 %----------------------------------------------------
 
 function logP=logprob(hmm,x)
@@ -33,8 +33,8 @@ logP=zeros(hmmSize);%space for result
 for i=1:numel(hmm)%for all HMM objects
     %Note: array elements can always be accessed as hmm(i),
     %regardless of hmmSize, even with multi-dimensional array.
-    %
     %logP(i)= result for hmm(i)
-    %continue coding from here, and delete the error message.
-    error('Not yet implemented');
+    [B, logS] = hmm(i).OutputDistr.prob(x); 
+    [~, c(i,:)] = hmm(i).StateGen.forward(B.*exp(logS));
+    logP(i) = sum(log(c(i,:)));
 end;
