@@ -1,4 +1,4 @@
-%test2
+%test
 % for ML upg. 5.1
 
 clear all

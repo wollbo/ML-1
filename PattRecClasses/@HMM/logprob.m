@@ -28,13 +28,12 @@
 
 function logP=logprob(hmm,x)
 hmmSize=size(hmm);%size of hmm array
-T=size(x,2);%number of vector samples in observed sequence
-logP=zeros(hmmSize);%space for result
+logP=zeros(hmmSize);%preallocation
 for i=1:numel(hmm)%for all HMM objects
     %Note: array elements can always be accessed as hmm(i),
     %regardless of hmmSize, even with multi-dimensional array.
     %logP(i)= result for hmm(i)
     [B, logS] = hmm(i).OutputDistr.prob(x); 
-    [~, c(i,:)] = hmm(i).StateGen.forward(B.*exp(logS));
-    logP(i) = sum(log(c(i,:)));
+    [~, c] = hmm(i).StateGen.forward(B.*exp(logS));
+    logP(i) = sum(log(c));
 end;

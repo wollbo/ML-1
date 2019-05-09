@@ -27,5 +27,16 @@ probX=hmm.OutputDistr.prob(x);
 
 logx = hmm.logprob(x)
 
+%% infinite duration test
 
+B = [0.9 0.1;0.2 0.8];
+p = q;
+
+mcInfinite = MarkovChain(p,B);
+x = [0.5 3.1 -1.5 1];
+
+hmmInfinite = HMM(mcInfinite,[g1 g2]);
+probXi=hmmInfinite.OutputDistr.prob(x);
+
+[alfaHatI, cI] = hmm.
 
