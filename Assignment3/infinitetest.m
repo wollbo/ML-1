@@ -1,23 +1,20 @@
 %% infinite duration test
+% Problem 5.1 in the book
 
-Ainf = [0.9 0.1;0.2 0.8];
-q = [1;0];
+Ainf = [0.3 0.7 0;0 0.5 0.5;0 0 1];
+q = [1;0;0];
 
 mcInf = MarkovChain(q,Ainf);
-x = [-0.2 2.6 1.3];
+z = [1 2 4 4 1];
 
-mu1 = 0;
-mu2 = 3;
+d1 = DiscreteD([1 0 0 0]);
+d2 = DiscreteD([0 0.5 0.4 0.1]);
+d3 = DiscreteD([0.1 0.1 0.2 0.6]);
 
-sigma1 = 1;
-sigma2 = 2;
-
-g1 = GaussD('Mean', mu1, 'StDev', sigma1);
-g2 = GaussD('Mean', mu2, 'StDev', sigma2);
-
-hmmInf = HMM(mcInf,[g1 g2]);
-probXi = hmmInf.OutputDistr.prob(x);
+hmmInf = HMM(mcInf,[d1;d2;d3]);
+probZ = hmmInf.OutputDistr.prob(z);
 
 % note that dim(cInf) = dim(x)
-[alfaHatInf, cInf] = hmmInf.StateGen.forward(probXi) 
+[alfaHatInf, cInf] = hmmInf.StateGen.forward(probZ)
+hmmInf.logprob(z)
 
