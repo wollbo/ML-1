@@ -1,9 +1,9 @@
 %% test
 %% own produced melodies
 
-a1 = audioread('melodies/hearts/1.wma');
-v1 = audioread('melodies/vindarna/1.wma');
-f1 = audioread('melodies/finland/1.wma');
+a1 = audioread('melodies/wav/hips/1.wav');
+v1 = audioread('melodies/wav/summer/1.wav');
+f1 = audioread('melodies/wav/uti/1.wav');
 
 addpath GetMusicFeatures
 
@@ -20,7 +20,7 @@ featureMatrix3 = GetMusicFeatures(f1,fs,winsize);
 
 %%
 
-features1 = featureExtractDiscrete(featureMatrix1,A);
+features1 = featureExtractContinuous(featureMatrix1,A);
 
 fig1 = figure(1)
 plot(features1(1,:)) 
