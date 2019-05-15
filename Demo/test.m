@@ -6,12 +6,11 @@ v1 = audioread('melodies/wav/summer/1.wav');
 f1 = audioread('melodies/wav/uti/1.wav');
 
 addpath GetMusicFeatures
-
+winsize = (2*10^(-2));
 fs = 44100;
 A = 440;
 twelveRatio = 2^(1/12);
 
-winsize = (2*10^(-2));
 
 featureMatrix1 = GetMusicFeatures(a1,fs,winsize);
 featureMatrix2 = GetMusicFeatures(v1,fs,winsize);

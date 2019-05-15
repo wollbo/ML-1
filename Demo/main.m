@@ -1,21 +1,18 @@
-addpath D:\MATLAB\Repos\ML-1\PattRecClasses
+addpath D:/MATLAB/Repos/ML-1/PattRecClasses
+addpath melodies
+addpath GetMusicFeatures
 
-folder = 'D:\MATLAB\Repos\ML-1\Demo\melodies'
-noFiles = dir(fullfile(folder,'*.wav'))
-for i = 1:noFiles
-    songs = audioread('melodies/wav/' + i)
-end
+% feed working dir to classRead
 
 winsize = (2*10^(-2));
 fs = 44100;
-A = 440;
 
-for i = 1:
-features(:,:,i) = featureExtractContinuous(featureMatrix1,A);
-
+% update 'workingDir' dynamically
+audio = classRead('Demo','uti'); % maybe replace with 'workingDir, 'list of music dirs'
 
 
 
+%%
 
 gaussian = GaussD('Mean', 0, 'StDev', 1);
 
