@@ -1,0 +1,26 @@
+% addpath D:/MATLAB/Repos/ML-1/PattRecClasses
+% addpath melodies
+% addpath GetMusicFeatures
+
+
+winsize = (2*10^(-2));
+fs = 44100;
+
+
+% update 'workingDir' dynamically
+audio = classRead('Demo','uti'); % maybe replace with 'workingDir, 'list of music dirs'
+
+for i = 1:size(audio,2)
+    matr = GetMusicFeatures(audio(:,i))
+    fMat(1:size(matr,1),length(1:matr),i) = 
+end
+
+%%
+
+gaussian = GaussD('Mean', 0, 'StDev', 1);
+
+nStates = 16;
+pD = gaussian;
+obsData = a1;
+
+hmm=MakeLeftRightHMM(nStates,pD,features1);
