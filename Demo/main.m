@@ -33,8 +33,9 @@ end
 %%
 
 gaussian = GaussD('Mean', A, 'StDev', 10);
+discrete = DiscreteD([1:1000]);
 nStates = 12;
-pD = gaussian; % depending on feature extractor
+pD = DiscreteD; % depending on feature extractor
 hmm=MakeLeftRightHMM(nStates,pD,featureLong(1,:),featureLengths); 
 % check MakeLeftRightHMM for vector observation input 'not enough data'
 
