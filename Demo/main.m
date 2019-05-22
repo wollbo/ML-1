@@ -58,7 +58,7 @@ hmm=MakeLeftRightHMM(nStates,pD,[featureLong(1,:); featureLong(2,:)],featureLeng
 %
 
 recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
-states = 12
+states = 8; % should be given as a vector, one for each characteristic melody
 
 % L = 1200;
 % uniform = 1/L * ones(1,L); 
@@ -92,7 +92,7 @@ end
 %alternatives
 
 
-audio = classRead('Demo', ['\test\', char(recNames(10))]);
+audio = classRead('Demo', ['\test\', char(recNames(5))]);
 features = extract(audio,fs,winsize,A);
 
 probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one
