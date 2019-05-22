@@ -5,7 +5,6 @@ a1 = audioread('melodies/wav/hips/1.wav');
 v1 = audioread('melodies/wav/summer/1.wav');
 f1 = audioread('melodies/wav/uti/1.wav');
 
-addpath GetMusicFeatures
 winsize = (2*10^(-2));
 fs = 44100;
 A = 440;

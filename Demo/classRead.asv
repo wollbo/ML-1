@@ -6,14 +6,10 @@ function file = classRead(workingDir, dirName)
 % only utilize GetMusicFeatures
 
 folder = [workingDir '/melodies/wav/' dirName];
-% file should be a cell array in order to avoid zero padding/allow
-% different lengths
-L = numel(dir(fullfile(folder,'*.wav')));
-file = cell(L,1);
-for i = 1:L
+% file should be a cell array in order to avoid zero padding/al
+for i = 1:numel(dir(fullfile(folder,'*.wav')))
     wav = sprintf('/%d.wav', i);
     audio = audioread([folder wav]);
-    file{i} = audio;
-    %file(1:length(audio),i) = audio;
+    file(1:length(audio),i) = audio;
 end
 end
