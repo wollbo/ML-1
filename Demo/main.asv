@@ -81,7 +81,7 @@ end
 %alternatives
 
 
-audio = classRead('Demo', ['/test/', char(recNames(9))]);
+audio = classRead('Demo', ['/test/', char(recNames(3))]);
 features = extract(audio,fs,winsize,A);
 
 probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one

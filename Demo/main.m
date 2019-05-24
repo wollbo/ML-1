@@ -81,7 +81,7 @@ end
 %alternatives
 
 
-audio = classRead('Demo', ['/test/', char(recNames(6))]);
+audio = classRead('Demo', ['/test/', char(recNames(9))]); % big improvement with new recordings: need more 'rasputin', 'hips', 'grace' !
 features = extract(audio,fs,winsize,A);
 
 probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one
