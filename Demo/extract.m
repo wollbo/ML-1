@@ -7,7 +7,3 @@ for i = 1:L
     features{i} = featureExtractContinuous(matr,normal); % continuous sometimes produces imaginary numbers?
 end
 end
-
-%%
-
-%
