@@ -1,3 +1,51 @@
+
+%% Main script
+% add ML-1 and all subfolders as path
+
+gaussian = GaussD('Mean', 600, 'StDev', 10); % quite arbitrary, doesn't really affect the result
+pD = [gaussian; gaussian]; 
+recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
+states = [7 7 6 8 8 5 7 8 8 9]; % by manual inspection of features
+
+for i = 1:length(recNames)
+    hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
+end
+
+%% Evaluation
+% load test files/features
+
+%audio = classRead('Demo', [char(recNames(10))]);
+%works perfectly if you test on training data, so there shouldn't be
+%anything fundamentally wrong with the code
+%conclusion: needs more training data and better initialization
+%for testing on training data: it differs ~ 0.3*10e+03 between probability for the correct one and the other
+%alternatives.
+%a optimally trained classifier should be in the same area
+
+%%
+
+winsize = (2*10^(-2));
+fs = 44100;
+A = 440;
+a = evaluateHMM(hmm,recNames,fs,winsize,A);
+
+%%
+
+audio = classRead('Demo', ['/test/', char(recNames(10))]); % big improvement with more recordings: need more 'rasputin', 'hips', 'grace' especially to improve marginals!
+features = extract(audio,fs,winsize,A);
+probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one, also how close it was to make an error
+[~, index] = max(hmm.logprob(features{1}));
+disp(char(recNames(index))) % observation: the correct answer is often among the most likely, and never the least likely. This is good.
+
+% write function to play chosen song, and display top three
+% alternatives/ranked list of most probable alternatives.
+
+
+% consider changing init distributions, evaluate number of states and -->
+% only seems to depend on the number of recordings!
+% choice of extractor --> continuous seems to be the only alternative!
+% fix continuous extractor --> seems to be fine!
+
 %% This part is just debugging
 % add ML-1 and all subfolders as path
 
@@ -58,39 +106,6 @@ hmm=MakeLeftRightHMM(nStates,pD,[featureLong(1,:); featureLong(2,:)],featureLeng
 
 %also test 2-GMM as init dist
 
-%% Main script
-%
-gaussian = GaussD('Mean', 600, 'StDev', 10);
-pD = [gaussian; gaussian];
-recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
-states = [7 7 6 8 8 5 7 8 8 9]; % should be given as a vector, one for each characteristic melody
-
-for i = 1:length(recNames)
-    hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
-end
-
-%% Evaluation
-% load test files/features
-
-%audio = classRead('Demo', [char(recNames(10))]);
-
-%works perfectly if you test on training data, so there shouldn't be
-%anything fundamentally wrong with the code
-%conclusion: needs more training data and better initialization
-%for testing on training data: it differs ~ 0.3*10e+03 between probability for the correct one and the other
-%alternatives
-
-
-audio = classRead('Demo', ['/test/', char(recNames(9))]); % big improvement with new recordings: need more 'rasputin', 'hips', 'grace' !
-features = extract(audio,fs,winsize,A);
-
-probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one
-[~, index] = max(hmm.logprob(features{1}));
-disp(char(recNames(index))) % observation: the correct answer is often among the most likely, and never the least likely. This is good.
-
-% consider changing init distributions, evaluate number of states and
-% choice of extractor
-% fix continuous extractor --> seems to be fine
 
 %% OLD
 

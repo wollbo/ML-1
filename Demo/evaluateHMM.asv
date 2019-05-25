@@ -1,0 +1,8 @@
+function accuracy = evaluateHMM(hmm,recNames,fs,window,normal)
+
+for i = 1:length(recNames)
+    audio = classRead('Demo', ['/test/', char(recNames)]); % big improvement with more recordings: need more 'rasputin', 'hips', 'grace' especially to improve marginals!
+    features = extract(audio,fs,window,normal);
+    probs(i) = hmm.logprob(features{1}); % write code to figure out how close the correct answer is to the chosen one, also how close it was to make an error
+    [~, index] = max(hmm.logprob(features{1}));
+disp(char(recNames(index)))
