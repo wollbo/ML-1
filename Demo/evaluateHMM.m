@@ -12,4 +12,4 @@ for i = 1:length(recNames) %not general for more than one recording in each test
         accuracy = [accuracy; 0];
     end
 end
-accuracy = sum(accuracy)./length(accuracy)
+accuracy = sum(accuracy)./length(accuracy);
