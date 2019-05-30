@@ -7,9 +7,9 @@ pD = [gaussian; gaussian];
 recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
 states = [7 7 6 8 8 5 7 8 8 9]; % by manual inspection of features
 
-avgN = 5;
+avgN = 50;
 acc = zeros(avgN,1);
-errorMatr = zeros(length(recNames),avgN)
+errorMatr = zeros(length(recNames),avgN);
 for j = 1:avgN
 for i = 1:length(recNames)
     shuffle(char(recNames(i)),1)

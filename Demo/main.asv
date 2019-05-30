@@ -7,11 +7,18 @@ pD = [gaussian; gaussian];
 recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
 states = [7 7 6 8 8 5 7 8 8 9]; % by manual inspection of features
 
+avgN = 10;
+acc = zeros(avgN,1);
+errorMatr = zeros(length(recNames),avgN);
+for j = 1:avgN
 for i = 1:length(recNames)
     shuffle(char(recNames(i)),1)
     hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
 end
-
+[acc(j),recErrors] = evaluateHMM(hmm,recNames,fs,winsize,A);
+errorMatr(:,j) = recErrors;
+end
+mean(acc)
 %% Evaluation
 % load test files/features
 
@@ -28,11 +35,11 @@ end
 winsize = (2*10^(-2));
 fs = 44100;
 A = 440;
-a = evaluateHMM(hmm,recNames,fs,winsize,A);
+[accuracy,recErrors] = evaluateHMM(hmm,recNames,fs,winsize,A);
 
 %%
 %recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
-audio = classRead('Demo', ['/test/', char(recNames(4))]); % big improvement with more recordings: need more 'rasputin', 'hips', 'grace' especially to improve marginals!
+audio = classRead('Demo', ['/test/', char(recNames(7))]); % big improvement with more recordings: need more 'rasputin', 'hips', 'grace' especially to improve marginals!
 features = extract(audio,fs,winsize,A);
 probs = hmm.logprob(features{1}) % write code to figure out how close the correct answer is to the chosen one, also how close it was to make an error
 [~, index] = max(hmm.logprob(features{1}));
