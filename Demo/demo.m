@@ -4,7 +4,7 @@
 winsize = (2*10^(-2));
 fs = 44100;
 A = 440;
-recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'}); %#ok<STRCLQT>
+recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
 
 % record some songs live and put them in the folder /demo/
 % run from the directory ML-1 

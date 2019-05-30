@@ -22,10 +22,10 @@ features1 = featureExtractContinuous(featureMatrix1,A);
 
 fig1 = figure(1)
 plot(features1(1,:)) 
-ylabel('Frequency [Hz]')
+ylabel('Pitch')
 xlabel('Window')
 set(gca, 'YScale', 'log')
-title('Melody 1')
+title('hips')
 
 %%
 
@@ -42,10 +42,15 @@ title('Melody 2')
 
 features3 = featureExtractContinuous(featureMatrix3,A);
 
-fig3 = figure(3)
-plot(features3(1,:)) 
-ylabel('Frequency [Hz]')
+fig3 = figure('Name','figures/utiFeatures')
+title('Uti vår hage')
+subplot(1,2,1);plot(features3(1,:)) 
+ylabel('Pitch')
 xlabel('Window')
 set(gca, 'YScale', 'log')
-title('Melody 3')
+subplot(1,2,2);plot(features3(2,:)) 
+ylabel('Intensity')
+xlabel('Window')
 
+
+printToPdf(fig3)
