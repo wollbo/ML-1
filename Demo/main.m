@@ -11,6 +11,7 @@ avgN = 50;
 acc = zeros(avgN,1);
 errorMatr = zeros(length(recNames),avgN);
 for j = 1:avgN
+    disp(j)
 for i = 1:length(recNames)
     shuffle(char(recNames(i)),1)
     hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
