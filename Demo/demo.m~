@@ -4,13 +4,29 @@
 winsize = (2*10^(-2));
 fs = 44100;
 A = 440;
+recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'}); %#ok<STRCLQT>
 
-% record some songs and put them in the folder /demo/
+% record some songs live and put them in the folder /demo/
 % run from the directory ML-1 
-audio = classRead('Demo', '/demo/');
+audio = classRead('Demo', '/demo/'); %maybe unneccesary, could be run in mat
 
-% show features
+%% show features
+% 
 features = extract(audio,fs,winsize,A);
+plot(features{1}(1,:))
 
+%% Evaluation
 % classify using hmm's
-% play 
+% play real version of chosen song/show picture of album
+
+probs = hmm.logprob(features{1});
+[M, index] = max(hmm.logprob(features{1}));
+maxVec = NaN(1,length(probs));
+maxVec(index) = M;
+stem(probs)
+set(gca,'xticklabel',recNames.');
+hold on
+stem(maxVec,'r')
+set(gca,'xticklabel',recNames.');
+
+disp(char(recNames(index))) % observation: the correct answer is often among the most likely, and never the least likely. This is good.

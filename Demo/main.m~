@@ -7,8 +7,8 @@ pD = [gaussian; gaussian];
 recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
 states = [7 7 6 8 8 5 7 8 8 9]; % by manual inspection of features
 
+for j = 1
 for i = 1:length(recNames)
-    shuffle(char(recNames(i)),1)
     hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
 end
 
