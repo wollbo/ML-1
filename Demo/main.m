@@ -1,4 +1,3 @@
-
 %% Main script
 % add ML-1 and all subfolders as path
 
@@ -7,20 +6,24 @@ pD = [gaussian; gaussian];
 recNames=string({'vindarna','uti','summer','rasputin','morning','hooked','hips','hearts','grace','finland'});
 states = [7 7 6 8 8 5 7 8 8 9]; % by manual inspection of features
 
-avgN = 2;
-acc = zeros(avgN,1);
-errorMatr = zeros(length(recNames),avgN);
-for j = 1:avgN
-    disp(j)
+winsize = (2*10^(-2));
+fs = 44100;
+A = 440;
+
+% avgN = 5;
+% acc = zeros(avgN,1);
+% errorMatr = zeros(length(recNames),avgN);
+% for j = 1:avgN
+%     disp(j)
 for i = 1:length(recNames)
     disp(i)
     shuffle(char(recNames(i)),2)
     hmm(i) = createHMM('Demo',char(recNames(i)),states(i),pD);
 end
-[acc(j),recErrors] = evaluateHMM(hmm,recNames,fs,winsize,A);
-errorMatr(:,j) = recErrors;
-end
-mean(acc)
+% [acc(j),recErrors] = evaluateHMM(hmm,recNames,fs,winsize,A);
+% errorMatr(:,j) = recErrors;
+% end
+% mean(acc)
 
 %% Evaluation
 % load test files/features
